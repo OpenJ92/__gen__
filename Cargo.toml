@@ -8,4 +8,5 @@ edition = "2018"
 
 [dependencies]
 wedged = "0.1.0"
-algebraic-gen = "0.1.0"
+ndarray = "0.15.6"
+ndarray-rand = "0.14.0"
