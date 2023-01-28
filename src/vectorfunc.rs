@@ -9,7 +9,7 @@ pub struct VectorFunc<A, B> {
 }
 
 impl<A, B> traits::VectorFunction<B> for VectorFunc<A, B> {
-    pub fn call(&self, t: Vec<B>) -> Vec<B> {
+    fn call(&self, t: Vec<B>) -> Vec<B> {
         return (self.func)((self.callparam)(t));
     }
 }

@@ -19,7 +19,7 @@ impl<A, B> traits::VectorFunction<B> for Segment<A, B>
 where
     B: Add<Output = B> + Mul<Output = B> + Sub<Output = B> + Copy,
 {
-    pub fn call(&self, t: Vec<B>) -> Vec<B> {
+    fn call(&self, t: Vec<B>) -> Vec<B> {
         let t: B = match &t[..] {
             [t, ..] => *t,
             _ => panic!(),
@@ -39,7 +39,7 @@ impl<T> traits::Exportable for Segment<export::SVG, T>
 where
     T: std::fmt::Display,
 {
-    pub fn export(&self) -> String {
+    fn export(&self) -> String {
         return format!(
             "<line x1=\"{}\"\
                               x2=\"{}\"\
@@ -64,7 +64,7 @@ impl<T> traits::Exportable for Segment<export::Processing, T>
 where
     T: std::fmt::Display,
 {
-    pub fn export(&self) -> String {
+    fn export(&self) -> String {
         return format!(
             "fill({});\n\
                         stroke({});\n\

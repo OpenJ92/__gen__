@@ -1,7 +1,7 @@
 pub struct SVG {
-    fill: String,
-    stroke: String,
-    stroke_width: f32,
+    pub fill: String,
+    pub stroke: String,
+    pub stroke_width: f32,
 }
 
 impl SVG {
@@ -15,9 +15,9 @@ impl SVG {
 }
 
 pub struct Processing {
-    fill: String,
-    stroke: String,
-    stroke_width: f32,
+    pub fill: String,
+    pub stroke: String,
+    pub stroke_width: f32,
 }
 
 impl Processing {
