@@ -1,6 +1,6 @@
-pub mod segment;
-
+#[path = "traits.rs"]
 mod traits;
+#[path = "export.rs"]
 mod export;
 
 use std::ops::Add;
@@ -35,11 +35,11 @@ where
     }
 }
 
-impl<T> traits::Exportable for segment::Segment<SVG, T>
+impl<T> traits::Exportable for Segment<export::SVG, T>
 where
     T: std::fmt::Display,
 {
-    fn export(&self) -> String {
+    pub fn export(&self) -> String {
         return format!(
             "<line x1=\"{}\"\
                               x2=\"{}\"\
@@ -60,7 +60,7 @@ where
     }
 }
 
-impl<T> traits::Exportable for Segment<Processing, T>
+impl<T> traits::Exportable for Segment<export::Processing, T>
 where
     T: std::fmt::Display,
 {

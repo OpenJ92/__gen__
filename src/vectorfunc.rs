@@ -1,5 +1,4 @@
-pub mod vectorfunc;
-
+#[path = "traits.rs"]
 mod traits;
 
 #[derive(Debug, PartialEq, PartialOrd)]

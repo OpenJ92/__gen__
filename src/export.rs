@@ -1,5 +1,3 @@
-pub mod export;
-
 pub struct SVG {
     fill: String,
     stroke: String,
@@ -7,7 +5,7 @@ pub struct SVG {
 }
 
 impl SVG {
-    fn default() -> SVG {
+    pub fn default() -> SVG {
         return SVG {
             fill: String::from("none"),
             stroke: String::from("black"),
@@ -23,7 +21,7 @@ pub struct Processing {
 }
 
 impl Processing {
-    fn default() -> Processing {
+    pub fn default() -> Processing {
         return Processing {
             fill: String::from("none"),
             stroke: String::from("blue"),

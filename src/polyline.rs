@@ -1,5 +1,4 @@
-pub mod polyline;
-
+#[path = "traits.rs"]
 mod traits;
 
 
@@ -14,7 +13,7 @@ impl<A, B> traits::VectorFunction<B> for PolyLine<A, B>
 where
     B: Copy,
 {
-    pub fn call(&self, t: Vec<B>) -> Vec<B> {
+    fn call(&self, t: Vec<B>) -> Vec<B> {
         let t: B = match &t[..] {
             [t, ..] => *t,
             _ => panic!(),
