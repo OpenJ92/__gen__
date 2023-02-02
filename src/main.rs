@@ -55,7 +55,7 @@ fn main() {
     traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
     
 
-    // println!("{}", line._export());
+    println!("{}", traits::Exportable::export_(&line));
 
     let v1 = Vec3::new(1.0, 0.0, 0.0);
     let v2 = Vec3::new(0.0, 1.0, 0.0);
@@ -74,7 +74,23 @@ fn main() {
     let t4 = BladeD::from_element(4, 3, 6.28); //dynamic dim, dynamic grade
 
     let q = Vec3::new(a, b, c);
-    // let r = std::ops::Fn::call(&Vec3::new, binding);
+}
+
+pub mod bezier {
+    use crate::traits;
+    use ndarray::ArrayD;
+
+    struct Bezier<A,B> {
+        pub control_points: ArrayD<f64>,
+        pub callparam: fn(Vec<B>) -> Vec<B>,
+        pub export_options: A,
+    }
+
+    impl<A,B> traits::VectorFunction<B> for Bezier<A, B> {
+        fn call(&self, t: Vec<B>) -> Vec<B> {
+            todo!();
+        }
+    }
 }
 
 pub mod traits;
