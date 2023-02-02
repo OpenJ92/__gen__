@@ -1,5 +1,4 @@
-#[path = "traits.rs"]
-mod traits;
+use crate::traits;
 
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct VectorFunc<A, B> {

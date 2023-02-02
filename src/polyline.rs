@@ -1,7 +1,3 @@
-#[path = "traits.rs"]
-mod traits;
-
-
 #[derive(Debug, PartialEq, PartialOrd)]
 pub struct PolyLine<A, B> {
     lines: Vec<Vec<B>>,

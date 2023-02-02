@@ -1,15 +1,11 @@
-mod traits;
-mod export;
-mod segment;
-mod vectorfunc;
-mod polyline;
-
 // use std::ops::Fn;
 use wedged::algebra::*;
 use ndarray::Array;
 use ndarray_rand::RandomExt;
 use ndarray_rand::rand_distr::Uniform;
 
+// use crate::segment::Segment;
+// use crate::vectorfunc::VectorFunc;
 
 // Consider removing the export options from each of these and placing them into
 // a Component type
@@ -36,7 +32,7 @@ fn main() {
         return vec![x * y, z * w];
     }
 
-    let line: segment::Segment<export::SVG, f64> = segment::Segment {
+    let line: Segment<export::SVG, f64> = Segment {
         p: vec![1.0, 2.0, 3.0, 4.0],
         q: vec![4.0, 3.0, 2.0, 1.0],
         callparam: |t| t,
@@ -55,12 +51,12 @@ fn main() {
         export_options: export::SVG::default(),
     };
 
-    traits::VectorFunction::call(&line, vec![1.]);
-    traits::VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
-    traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
+    line.call(vec![1.]);
+    // traits::VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
+    // traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
+    
 
-    println!("{}", line.export());
-
+    // println!("{}", line._export());
 
     let v1 = Vec3::new(1.0, 0.0, 0.0);
     let v2 = Vec3::new(0.0, 1.0, 0.0);
@@ -81,6 +77,4 @@ fn main() {
 
     let q = Vec3::new(a, b, c);
     // let r = std::ops::Fn::call(&Vec3::new, binding);
-
-    return ();
 }
