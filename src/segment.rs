@@ -23,13 +23,14 @@ where
             _ => panic!(),
         };
 
-        let pzq = self.p.iter().zip(self.q.iter());
-        let pzqm = pzq.map(|u| *u.1 - *u.0);
+        let pzq = self.p.iter()
+                        .zip(self.q.iter())
+                        .map(|u| *u.1 - *u.0);
 
-        let pzpzqm = self.p.iter().zip(pzqm);
-        let result = pzpzqm.map(|u| *u.0 + (self.callparam)(t) * u.1);
-
-        return result.collect();
+        return self.p.iter()
+                     .zip(pzq)
+                     .map(|u| *u.0 + (self.callparam)(t) * u.1)
+                     .collect();
     }
 }
 

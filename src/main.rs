@@ -53,7 +53,6 @@ fn main() {
     traits::VectorFunction::call(&line, vec![1.]);
     traits::VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
     traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
-    
 
     println!("{}", traits::Exportable::export_(&line));
 
@@ -72,16 +71,28 @@ fn main() {
             _ => panic!("Input to function must have exactly 3 elements."),
     };
     let t4 = BladeD::from_element(4, 3, 6.28); //dynamic dim, dynamic grade
-
     let q = Vec3::new(a, b, c);
+}
+
+pub mod atoms {
+    struct Point<A> { vec: Vec<A> }
+    // We should move segment into this module along with polyline.
+    struct Segment { todo!() }
+    struct PolySegment { todo!() }
+    struct Triangle { todo!() } // Ordered list
+    struct PolyTriangle { todo!() }
+    // The VectorFunction trait method should be able to handle all five of these
+    // situations. Be it a computation or a panic!(). They are members of the 
+    // operable class of objects.
 }
 
 pub mod bezier {
     use crate::traits;
-    use ndarray::ArrayD;
+    use ndarray::Array;
+    use ndarray::IxDyn;
 
     struct Bezier<A,B> {
-        pub control_points: ArrayD<f64>,
+        pub control_points: Array<IxDyn, f64>,
         pub callparam: fn(Vec<B>) -> Vec<B>,
         pub export_options: A,
     }
