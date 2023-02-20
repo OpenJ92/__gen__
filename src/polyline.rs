@@ -2,6 +2,8 @@ use crate::traits;
 use crate::segment::Segment;
 
 use num_traits::real::Real;
+use num_traits::zero;
+use num_traits::one;
 // We now introduce new external package in order to specify behavior of 
 // parameter B to be "Real"
 
@@ -26,11 +28,11 @@ where
         let prime : B = length * t;
 
         if prime >= length {
-            let frac = 1; 
-            let whole = length - 1.into();
-        } else if prime < 0.into() {
-            let frac = 0;
-            let whole = 0;
+            let frac = one(); 
+            let whole = length - one();
+        } else if prime < zero() {
+            let frac = zero();
+            let whole = zero();
         } else {
             let frac = prime.fract(); 
             let whole = prime.floor();
