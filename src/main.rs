@@ -31,30 +31,26 @@ fn main() {
         return vec![x * y, z * w];
     }
 
-    let line: segment::Segment<export::SVG, f64> = segment::Segment {
+    let line: segment::Segment<f64> = segment::Segment {
         p: vec![1.0, 2.0, 3.0, 4.0],
         q: vec![4.0, 3.0, 2.0, 1.0],
         callparam: |t| t,
-        export_options: export::SVG::default(),
     };
 
-    let v0: vectorfunc::VectorFunc<export::SVG, f64> = vectorfunc::VectorFunc {
+    let v0: vectorfunc::VectorFunc<f64> = vectorfunc::VectorFunc {
         func: f,
         callparam: |c| c,
-        export_options: export::SVG::default(),
     };
 
-    let v1: vectorfunc::VectorFunc<export::SVG, f64> = vectorfunc::VectorFunc {
+    let v1: vectorfunc::VectorFunc<f64> = vectorfunc::VectorFunc {
         func: f,
         callparam: |c| c,
-        export_options: export::SVG::default(),
     };
 
     VectorFunction::call(&line, vec![1.]);
     VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
     VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
 
-    println!("{}", traits::Exportable::export_(&line));
 
     let v1 = Vec3::new(1.0, 0.0, 0.0);
     let v2 = Vec3::new(0.0, 1.0, 0.0);
@@ -91,13 +87,12 @@ pub mod bezier {
     use ndarray::Array;
     use ndarray::IxDyn;
 
-    struct Bezier<A,B> {
+    struct Bezier<B> {
         pub control_points: Array<IxDyn, B>,
         pub callparam: fn(Vec<B>) -> Vec<B>,
-        pub export_options: A,
     }
 
-    impl<A,B> traits::VectorFunction<B> for Bezier<A, B> {
+    impl<B> traits::VectorFunction<B> for Bezier<B> {
         fn call(&self, t: Vec<B>) -> Vec<B> {
             todo!();
         }

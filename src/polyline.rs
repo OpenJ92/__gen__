@@ -6,13 +6,12 @@ use num_traits::real::Real;
 // parameter B to be "Real"
 
 #[derive(Debug, PartialEq, PartialOrd)]
-pub struct PolyLine<A, B> {
-    lines: Vec<Segment<A, B>>,
+pub struct PolyLine<B> {
+    lines: Vec<Segment<B>>,
     callparam: fn(B) -> B,
-    export_options: A,
 }
 
-impl<A, B> traits::VectorFunction<B> for PolyLine<A, B>
+impl<B> traits::VectorFunction<B> for PolyLine<B>
 where
     B: Copy + Real + std::convert::From<usize>
 {
@@ -23,7 +22,7 @@ where
         };
         let t: B = (self.callparam)(t);
         let spines : &Vec<Segment<B>> = &self.lines; 
-        let length : B = spines.len().try_into().unwrap();
+        let length : B = spines.len().into();
         let prime : B = length * t;
 
         if prime >= length {
