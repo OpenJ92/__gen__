@@ -40,12 +40,12 @@ where
 {
     fn export_(&self) -> String {
         return format!(
-            "<line x1=\"{}\"\
-                              x2=\"{}\"\
-                              y1=\"{}\"\
-                              y2=\"{}\"\
-                              fill=\"{}\"\
-                              stroke=\"{}\"\
+            "<line x1=\"{}\" \
+                              x2=\"{}\" \
+                              y1=\"{}\" \
+                              y2=\"{}\" \
+                              fill=\"{}\" \
+                              stroke=\"{}\" \
                               stroke-width=\"{}\"\
                         />\n",
             self.p[0],
