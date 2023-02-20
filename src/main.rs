@@ -81,6 +81,13 @@ fn main() {
 //     // situations. Be it a computation or a panic!(). They are members of the 
 //     // operable class of objects.
 // }
+//
+// in more particular terms, We nust update the VectorFunction trait call to
+//
+// fn call(t: Atom) -> Atom 
+//
+// Then, all Atoms will be exportable.
+
 
 pub mod bezier {
     use crate::traits;
