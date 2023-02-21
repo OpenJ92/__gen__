@@ -1,8 +1,18 @@
 // use std::ops::Fn;
 use wedged::algebra::*;
+
 use ndarray::Array;
 use ndarray_rand::RandomExt;
 use ndarray_rand::rand_distr::Uniform;
+
+use crate::polyline::PolyLine;
+
+pub mod traits;
+use traits::VectorFunction;
+pub mod export;
+pub mod vectorfunc;
+pub mod polyline;
+pub mod segment;
 
 // use crate::segment::Segment;
 // use crate::vectorfunc::VectorFunc;
@@ -37,6 +47,12 @@ fn main() {
         callparam: |t| t,
     };
 
+    let line_: segment::Segment<f64> = segment::Segment {
+        p: vec![4.0, 3.0, 2.0, 1.0],
+        q: vec![6.0, 2.4, 2.5, 9.0],
+        callparam: |t| t,
+    };
+
     let v0: vectorfunc::VectorFunc<f64> = vectorfunc::VectorFunc {
         func: f,
         callparam: |c| c,
@@ -47,7 +63,12 @@ fn main() {
         callparam: |c| c,
     };
 
-    VectorFunction::call(&line, vec![1.]);
+    let pl: polyline::PolyLine<f64> = PolyLine {
+        segments: &vec![line, line_], 
+        callparam: |c| c,
+    };
+
+    VectorFunction::call(&pl, vec![1.]);
     VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
     VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
 
@@ -67,7 +88,6 @@ fn main() {
             _ => panic!("Input to function must have exactly 3 elements."),
     };
     let t4 = BladeD::from_element(4, 3, 6.28); //dynamic dim, dynamic grade
-    let q = Vec3::new(a, b, c);
 }
 
 // pub mod atoms {
@@ -106,9 +126,3 @@ pub mod bezier {
     }
 }
 
-pub mod traits;
-use traits::VectorFunction;
-pub mod export;
-pub mod vectorfunc;
-pub mod polyline;
-pub mod segment;

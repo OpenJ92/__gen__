@@ -1,43 +1,56 @@
 use crate::traits;
 use crate::segment::Segment;
 
+
+use num_traits::FromPrimitive;
+use num_traits::ToPrimitive;
 use num_traits::real::Real;
 use num_traits::zero;
 use num_traits::one;
-// We now introduce new external package in order to specify behavior of 
-// parameter B to be "Real"
 
 #[derive(Debug, PartialEq, PartialOrd)]
-pub struct PolyLine<B> {
-    lines: Vec<Segment<B>>,
-    callparam: fn(B) -> B,
+pub struct PolyLine<'a, B> {
+    pub segments: &'a Vec<Segment<B>>,
+    pub callparam: fn(B) -> B,
 }
 
-impl<B> traits::VectorFunction<B> for PolyLine<B>
+
+impl<'a, B> traits::VectorFunction<B> for PolyLine<'a, B>
 where
-    B: Copy + Real + std::convert::From<usize>
+    B: Copy + Real + FromPrimitive + ToPrimitive, 
 {
     fn call(&self, t: Vec<B>) -> Vec<B> {
+        // Capture Real number to apply to VectorFunction::Polyline
         let t: B = match &t[..] {
             [t, ..] => *t,
             _ => panic!(),
         };
-        let t: B = (self.callparam)(t);
-        let spines : &Vec<Segment<B>> = &self.lines; 
-        let length : B = spines.len().into();
-        let prime : B = length * t;
 
-        if prime >= length {
-            let frac = one(); 
-            let whole = length - one();
-        } else if prime < zero() {
-            let frac = zero();
-            let whole = zero();
-        } else {
-            let frac = prime.fract(); 
-            let whole = prime.floor();
-        }
+        // Update Real number according to paraemterization. Query length of
+        // segments. Thier product whole.frac will be the vector accessor, whole, 
+        // and call, frac, to the appropriate Segment inside.
+        let t        : B     = (self.callparam)(t);
+        let length   : usize = self.segments.len();
+        let location : B     = t * B::from_usize(length).unwrap();
 
-        return spines[whole].call(frac)
+        // Check location to be interior to the size of the vector.
+        let (whole, frac) = 
+            if location >= B::from_usize(length).unwrap() {
+                let frac  : B     = one(); 
+                let whole : usize = length - one::<usize>();
+                (whole, frac)
+            } else if location < zero() {
+                let frac  : B     = zero();
+                let whole : usize = zero();
+                (whole, frac)
+            } else {
+                let frac  : B     = location.fract(); 
+                let whole : usize = location.floor().to_usize().unwrap();
+                (whole, frac)
+            };
+
+        // Capture the appropriate segment from segments and call on frac.
+        return self.segments[whole].call(vec!(frac))
     }
+
 }
