@@ -71,23 +71,6 @@ fn main() {
     VectorFunction::call(&pl, vec![1.]);
     VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
     VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
-
-
-    let v1 = Vec3::new(1.0, 0.0, 0.0);
-    let v2 = Vec3::new(0.0, 1.0, 0.0);
-    let plane = v1 ^ v2;
-    let cross = plane.dual();
-    
-    assert_eq!(plane, BiVec3::new(0.0,0.0,1.0));
-    assert_eq!(cross, Vec3::new(0.0,0.0,1.0));
-
-    let binding = Array::random((3,), Uniform::new(0., 10.));
-    let [a, b, c] = match binding.as_slice()
-    {
-            Some([x, y, z]) => [x, y, z],
-            _ => panic!("Input to function must have exactly 3 elements."),
-    };
-    let t4 = BladeD::from_element(4, 3, 6.28); //dynamic dim, dynamic grade
 }
 
 // pub mod atoms {

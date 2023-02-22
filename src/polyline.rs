@@ -14,7 +14,6 @@ pub struct PolyLine<'a, B> {
     pub callparam: fn(B) -> B,
 }
 
-
 impl<'a, B> traits::VectorFunction<B> for PolyLine<'a, B>
 where
     B: Copy + Real + FromPrimitive + ToPrimitive, 
@@ -52,5 +51,4 @@ where
         // Capture the appropriate segment from segments and call on frac.
         return self.segments[whole].call(vec!(frac))
     }
-
 }

@@ -1,8 +1,9 @@
 use crate::traits;
+use ndarray::Array;
 
 use num_traits::real::Real;
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Segment<B> {
     pub p: Vec<B>,
     pub q: Vec<B>,
@@ -19,16 +20,21 @@ where
             _ => panic!(),
         };
 
-        let pzq = self.p.iter()
-                        .zip(self.q.iter())
-                        .map(|u| *u.1 - *u.0);
+        let pzq = self.p
+            .iter()
+            .zip(self.q.iter())
+            .map(|u| *u.1 - *u.0);
 
-        return self.p.iter()
-                     .zip(pzq)
-                     .map(|u| *u.0 + (self.callparam)(t) * u.1)
-                     .collect();
+        return self.p
+            .iter()
+            .zip(pzq)
+            .map(|u| *u.0 + (self.callparam)(t) * u.1)
+            .collect();
     }
 }
+
+impl<T: Clone> traits::Atomic_ for Segment<T> {}
+// impl<T: Clone> traits::Atomic<T> for Segment<T> {}
 
 // impl<T> traits::Exportable for Segment<export::SVG, T>
 // where
