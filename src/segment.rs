@@ -5,8 +5,8 @@ use num_traits::real::Real;
 
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
 pub struct Segment<B> {
-    pub p: Vec<B>,
-    pub q: Vec<B>,
+    pub start: Vec<B>,
+    pub end: Vec<B>,
     pub callparam: fn(B) -> B,
 }
 
@@ -20,20 +20,31 @@ where
             _ => panic!(),
         };
 
-        let pzq = self.p
+        let startzend = self.start
             .iter()
-            .zip(self.q.iter())
+            .zip(self.end.iter())
             .map(|u| *u.1 - *u.0);
 
-        return self.p
+        return self.start
             .iter()
-            .zip(pzq)
+            .zip(startzend)
             .map(|u| *u.0 + (self.callparam)(t) * u.1)
             .collect();
     }
 }
 
-impl<T: Clone> traits::Atomic_ for Segment<T> {}
+// Perhaps this is overkill. Should we have a Atomic Enumeration so we can just 
+// pattern match over the possible forms? ie Point, Segment, Triangle, Poly*
+//
+// #[derive(Clone)]
+// pub struct Point<T: Real> {
+//     pub point: Vec<T> 
+// }
+// impl<T: Clone> traits::Atomic_ for Segment<T> {}
+// impl<T: Real> traits::Atomic_ for Point<T> {}
+// impl<T: Real> traits::Vector_Function for Segment<T> { 
+//     fn call<Point<T>>(&self, t) { todo!() }
+// }
 // impl<T: Clone> traits::Atomic<T> for Segment<T> {}
 
 // impl<T> traits::Exportable for Segment<export::SVG, T>

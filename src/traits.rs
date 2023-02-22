@@ -25,9 +25,9 @@ pub trait Random<T> {
 pub trait Sample_Method<T: Atomic_> {
     fn values(&self) -> Vec<T>;
 }
-pub trait Vector_Function<T: Atomic_> {
-    fn call(&self, t: T) -> T;
-    fn sample(&self, sample_method: impl Sample_Method<T>) -> Vec<T> {
+pub trait Vector_Function {
+    fn call<T: Atomic_>(&self, t: T) -> T;
+    fn sample<T: Atomic_>(&self, sample_method: impl Sample_Method<T>) -> Vec<T> {
         // We're forced to use clone here which is quite upsetting. We'd like to just be able
         // to Copy the component. Additionally, we can't declare reference functions? Why is
         // that the case?

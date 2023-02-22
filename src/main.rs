@@ -42,14 +42,14 @@ fn main() {
     }
 
     let line: segment::Segment<f64> = segment::Segment {
-        p: vec![1.0, 2.0, 3.0, 4.0],
-        q: vec![4.0, 3.0, 2.0, 1.0],
+        start: vec![1.0, 2.0, 3.0, 4.0],
+        end: vec![4.0, 3.0, 2.0, 1.0],
         callparam: |t| t,
     };
 
     let line_: segment::Segment<f64> = segment::Segment {
-        p: vec![4.0, 3.0, 2.0, 1.0],
-        q: vec![6.0, 2.4, 2.5, 9.0],
+        start: vec![4.0, 3.0, 2.0, 1.0],
+        end: vec![6.0, 2.4, 2.5, 9.0],
         callparam: |t| t,
     };
 
