@@ -38,16 +38,17 @@ pub trait Random<T> {
 // }
 
 pub trait ASampleMethod<T> {
-    fn values(&self) -> Vec<Atom<T>>;
+    fn values(&self) -> Vec<&Atom<T>>;
 }
 pub trait AVectorFunction<T> {
     fn call(&self, t: &Atom<T>) -> &Atom<T>;
-    fn sample(&self, sample_method: impl ASampleMethod<T>) -> Vec<Atom<T>> {
+    
+    fn sample(&self, sample_method: impl ASampleMethod<T>) -> Vec<&Atom<T>> {
         let values = sample_method.values();
-        let mut resolv = Vec::<Atom<T>>::new();
+        let mut resolv = Vec::<&Atom<T>>::new();
 
         for value in values.iter() {
-            resolv.push(*self.call(&value));
+            resolv.push(self.call(value));
         }
         return resolv;
     }
