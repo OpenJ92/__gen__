@@ -6,6 +6,7 @@ use ndarray_rand::RandomExt;
 use ndarray_rand::rand_distr::Uniform;
 
 use crate::polyline::PolyLine;
+use crate::atomics::Atom;
 
 pub mod traits;
 use traits::VectorFunction;
@@ -13,6 +14,7 @@ pub mod export;
 pub mod vectorfunc;
 pub mod polyline;
 pub mod segment;
+pub mod atomics;
 
 // use crate::segment::Segment;
 // use crate::vectorfunc::VectorFunc;
