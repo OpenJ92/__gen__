@@ -1,5 +1,6 @@
 use crate::traits;
 use crate::segment::Segment;
+use crate::atomics::Atom;
 
 
 use num_traits::FromPrimitive;
@@ -50,5 +51,30 @@ where
 
         // Capture the appropriate segment from segments and call on frac.
         return self.segments[whole].call(vec!(frac))
+    }
+}
+
+impl<'a, T> traits::AVectorFunction<T> for PolyLine<'a, T> {
+    fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+        let res: Result<&Atom<T>, ()> = match t {
+            scalar@Atom::Scalar { .. } => self.call_scalar(scalar),
+            point@Atom::Point { .. } => self.call_point(point),
+            line@Atom::Line { .. } => self.call_line(line),
+            triangle@Atom::Triangle { .. } => self.call_triangle(triangle)
+        };
+        Err(())
+    }
+
+    fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+        Err(())
+    }
+    fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+        Err(())
+    }
+    fn call_line(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>{
+        Err(())
+    }
+    fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
+        Err(())
     }
 }

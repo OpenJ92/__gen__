@@ -41,15 +41,20 @@ pub trait ASampleMethod<T> {
     fn values(&self) -> Vec<&Atom<T>>;
 }
 pub trait AVectorFunction<T> {
-    fn call(&self, t: &Atom<T>) -> &Atom<T>;
+    fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+    fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+    fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+    fn call_line(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+    fn call_triangle(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
     
-    fn sample(&self, sample_method: impl ASampleMethod<T>) -> Vec<&Atom<T>> {
-        let values = sample_method.values();
-        let mut resolv = Vec::<&Atom<T>>::new();
+    fn sample(&self, sample_method: impl ASampleMethod<T>) -> Result<Vec<&Atom<T>>, ()> {
+        // let values     = sample_method.values();
+        // let mut resolv = Vec::<&Atom<T>>::new();
 
-        for value in values.iter() {
-            resolv.push(self.call(value));
-        }
-        return resolv;
+        // for value in values.iter() {
+        //     resolv.push(self.call(value));
+        // }
+        // return resolv;
+        Err(())
     }
 }
