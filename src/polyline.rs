@@ -20,6 +20,8 @@ impl<'a, B> traits::VectorFunction<B> for PolyLine<'a, B>
 where
     B: Copy + Real + FromPrimitive + ToPrimitive, 
 {
+    // In some sense, this will be the implementation of call_point. All other
+    // methods on the trait AVectorFunc
     fn call(&self, t: Vec<B>) -> Vec<B> {
         // Capture Real number to apply to VectorFunction::Polyline
         let t: B = match &t[..] {
@@ -71,7 +73,7 @@ impl<'a, T: ndarray::Dimension> traits::AVectorFunction<T> for PolyLine<'a, T> {
             line@Atom::Line { .. } => self.call_line(line),
             triangle@Atom::Triangle { .. } => self.call_triangle(triangle)
         };
-        Err(())
+        res
     }
 
     fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
@@ -95,8 +97,8 @@ impl<'a, T: ndarray::Dimension> traits::AVectorFunction<T> for PolyLine<'a, T> {
                                       Ok(_)   => Err(()), 
                                       Err(..) => Err(())
                           };
-                   let val = Atom::Line { start: &resstart.unwrap() , end: &resend.unwrap() };
-                   Ok(val)
+                   let val = Atom::Line { start: resstart? , end: resend? };
+                   Err(()) 
                  },
             _   => Err(()),
         };

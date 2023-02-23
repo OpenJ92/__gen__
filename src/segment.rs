@@ -14,6 +14,7 @@ impl<B> traits::VectorFunction<B> for Segment<B>
 where
     B: Real + Copy,
 {
+    // Like Atom::Point
     fn call(&self, t: Vec<B>) -> Vec<B> {
         let t: B = match &t[..] {
             [t, ..] => *t,
