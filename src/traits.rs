@@ -37,10 +37,10 @@ pub trait Random<T> {
 //     }
 // }
 
-pub trait ASampleMethod<T> {
+pub trait ASampleMethod<T: ndarray::Dimension> {
     fn values(&self) -> Vec<&Atom<T>>;
 }
-pub trait AVectorFunction<T> {
+pub trait AVectorFunction<T: ndarray::Dimension> {
     fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
     fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
     fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;

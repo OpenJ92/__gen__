@@ -1,7 +1,7 @@
 use ndarray::{ Array, Ix1 };
 
-#[derive(Clone, Copy)]
-pub enum Atom<'a, T> {
+#[derive(Clone, Copy, Debug)]
+pub enum Atom<'a, T: ndarray::Dimension> {
     Scalar   { scalar: T }, 
     Point    { point:  &'a Array<Ix1, T> }, 
     Line     { start:  &'a Array<Ix1, T>, end: &'a Array<Ix1, T> },

@@ -2,6 +2,7 @@ use crate::traits;
 use crate::segment::Segment;
 use crate::atomics::Atom;
 
+use ndarray::{ Array, Ix1 };
 
 use num_traits::FromPrimitive;
 use num_traits::ToPrimitive;
@@ -54,7 +55,7 @@ where
     }
 }
 
-impl<'a, T> traits::AVectorFunction<T> for PolyLine<'a, T> {
+impl<'a, T: ndarray::Dimension> traits::AVectorFunction<T> for PolyLine<'a, T> {
     fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
         let res: Result<&Atom<T>, ()> = match t {
             scalar@Atom::Scalar { .. } => self.call_scalar(scalar),
@@ -74,15 +75,25 @@ impl<'a, T> traits::AVectorFunction<T> for PolyLine<'a, T> {
     fn call_line(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>{
         let res: Result<&Atom<T>, ()> = match t {
             Atom::Line { start: start, end: end } 
-                => Ok(&Atom::Line { start: self.call_point(&Atom::Point {point: start}).unwrap().point()
-                                  , end  : self.call_point(&Atom::Point {point: end}).unwrap().point()
-                                  }
-                     ),
+                => { let resstart: Result<&Array<Ix1, T>, ()>
+                              = match self.call_point(&Atom::Point {point: start}) {
+                                        Ok(Atom::Point { point: arr }) => Ok(arr), 
+                                        Ok(_)   => Err(()), 
+                                        Err(..) => Err(())
+                              };
+                     let resend: Result<&Array<Ix1, T>, ()>  
+                            = match self.call_point(&Atom::Point {point: end}) {
+                                        Ok(Atom::Point { point: arr }) => Ok(arr),  
+                                        Ok(_)   => Err(()), 
+                                        Err(..) => Err(())
+                            };
+                     Ok(&Atom::Line { start: resstart.unwrap() , end: resend.unwrap() })
+                   },
             _   => Err(()),
         };
-        Err(())
+        res
     }
-fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
-        Err(())
+    fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
+            Err(())
     }
 }
