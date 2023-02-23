@@ -14,9 +14,18 @@ struct __Point__<'a, T: ndarray::Dimension> {
 }
 
 enum AtomA<'a, T: ndarray::Dimension> {
-    Point(__Point__<'a, T>),
-    Line(__Point__<'a, T>, __Point__<'a, T>),
-    Triangle(__Point__<'a, T>,__Point__<'a, T>, __Point__<'a, T>)
+    Point(&'a __Point__<'a, T>),
+    Line(&'a __Point__<'a, T>, &'a __Point__<'a, T>),
+    Triangle(&'a __Point__<'a, T>,&'a __Point__<'a, T>, &'a __Point__<'a, T>)
+}
+
+struct CompositeAtom<'a, T: ndarray::Dimension> {
+    points: Vec<AtomA<'a, T>>
+}
+
+enum Callable<'a, T: ndarray::Dimension> {
+    Atomic(AtomA<'a, T>),
+    Composite(CompositeAtom<'a, T>)
 }
 // Here we're looking to build a set of vector functions which act upon a heap allocated
 // set of Atom(A)s. 
