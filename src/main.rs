@@ -6,7 +6,7 @@ use ndarray_rand::RandomExt;
 use ndarray_rand::rand_distr::Uniform;
 
 use crate::polyline::PolyLine;
-use crate::atomics::Atom;
+use crate::atomics::{__Point__, Atom, AtomA, CompositeAtom, __Callable__};
 
 pub mod traits;
 use traits::VectorFunction;
@@ -101,13 +101,7 @@ pub mod bezier {
 
     struct Bezier<B> {
         pub control_points: Array<IxDyn, B>,
-        pub callparam: fn(Vec<B>) -> Vec<B>,
-    }
-
-    impl<B> traits::VectorFunction<B> for Bezier<B> {
-        fn call(&self, t: Vec<B>) -> Vec<B> {
-            todo!();
-        }
+        pub callparam: fn(Callable<'a, B>) -> Callable<'a, B>,
     }
 }
 
