@@ -72,9 +72,17 @@ impl<'a, T> traits::AVectorFunction<T> for PolyLine<'a, T> {
         Err(())
     }
     fn call_line(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>{
+        let res: Result<&Atom<T>, ()> = match t {
+            Atom::Line { start: start, end: end } 
+                => Ok(&Atom::Line { start: self.call_point(&Atom::Point {point: start}).unwrap().point()
+                                  , end  : self.call_point(&Atom::Point {point: end}).unwrap().point()
+                                  }
+                     ),
+            _   => Err(()),
+        };
         Err(())
     }
-    fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
+fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
         Err(())
     }
 }
