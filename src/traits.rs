@@ -1,5 +1,4 @@
-use num_traits::real::Real;
-use crate::atomics::Atom;
+use crate::atomics::{__Point__, Atom, AtomA, __Callable__};
 
 pub trait Atomic<T> : Clone {}
 pub trait Atomic_ : Clone {}
@@ -37,24 +36,36 @@ pub trait Random<T> {
 //     }
 // }
 
-pub trait ASampleMethod<T: ndarray::Dimension> {
-    fn values(&self) -> Vec<&Atom<T>>;
-}
-pub trait AVectorFunction<T: ndarray::Dimension> {
-    fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
-    fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
-    fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
-    fn call_line(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
-    fn call_triangle(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
-    
-    fn sample(&self, sample_method: impl ASampleMethod<T>) -> Result<Vec<&Atom<T>>, ()> {
-        // let values     = sample_method.values();
-        // let mut resolv = Vec::<&Atom<T>>::new();
+// pub trait ASampleMethod<T: ndarray::Dimension> {
+//     fn values(&self) -> Vec<&Atom<T>>;
+// }
+// pub trait AVectorFunction<T: ndarray::Dimension> {
+//     fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+//     fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+//     fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+//     fn call_line(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+//     fn call_triangle(&self, t: &Atom<T>) -> Result<&Atom<T>, ()>;
+//     
+//     // fn sample(&self, sample_method: impl ASampleMethod<T>) -> Result<Vec<&Atom<T>>, ()> {
+//     //     // let values     = sample_method.values();
+//     //     // let mut resolv = Vec::<&Atom<T>>::new();
+// 
+//     //     // for value in values.iter() {
+//     //     //     resolv.push(self.call(value));
+//     //     // }
+//     //     // return resolv;
+//     //     Err(())
+//     // }
+// }
 
-        // for value in values.iter() {
-        //     resolv.push(self.call(value));
-        // }
-        // return resolv;
+pub trait BSampleMethod<T: ndarray::Dimension> {
+    fn values(&self) -> Vec<&__Callable__<T>>; 
+}
+
+pub trait BVectorFunction<'a, T: ndarray::Dimension> {
+    fn call(&self, t: &'a mut __Callable__<T>) -> ();
+    fn __call__point__(&self, t: &'a mut __Point__<T>) -> ();
+    fn sample(&self, sample_method: impl BSampleMethod<T>) -> Result<__Callable__<T>, ()> {
         Err(())
     }
 }

@@ -1,22 +1,23 @@
 use crate::traits;
-use ndarray::Array;
+use crate::atomics::{__Point__, __Callable__, AtomA};
+// use ndarray::Array;
 
 use num_traits::real::Real;
 
 #[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct Segment<B> {
-    pub start: Vec<B>,
-    pub end: Vec<B>,
-    pub callparam: fn(B) -> B,
+pub struct Segment<T> {
+    pub start: Vec<T>,
+    pub end: Vec<T>,
+    pub callparam: fn(T) -> T,
 }
 
-impl<B> traits::VectorFunction<B> for Segment<B>
+impl<T> traits::VectorFunction<T> for Segment<T>
 where
-    B: Real + Copy,
+    T: Real + Copy,
 {
     // Like Atom::Point
-    fn call(&self, t: Vec<B>) -> Vec<B> {
-        let t: B = match &t[..] {
+    fn call(&self, t: Vec<T>) -> Vec<T> {
+        let t: T = match &t[..] {
             [t, ..] => *t,
             _ => panic!(),
         };
@@ -31,6 +32,32 @@ where
             .zip(startzend)
             .map(|u| *u.0 + (self.callparam)(t) * u.1)
             .collect();
+    }
+}
+
+impl<'a, T: ndarray::Dimension> traits::BVectorFunction<'a, T> for Segment<T> {
+    fn __call__point__(&self, t: &'a mut __Point__<T>) -> () {
+        // let __Point__{ point: p } = t;
+        todo!()
+    }
+    fn call(&self, t: &'a mut __Callable__<T>) -> () {
+        let res = match t {
+            __Callable__::Atomic(AtomA::Point(p))             => {
+                self.__call__point__(*p);
+            },
+            __Callable__::Atomic(AtomA::Line(p1, p2))         => {
+                self.__call__point__(*p1);
+                self.__call__point__(*p2);
+            }, 
+            __Callable__::Atomic(AtomA::Triangle(p1, p2, p3)) => {
+                self.__call__point__(*p1);
+                self.__call__point__(*p2);
+                self.__call__point__(*p3);
+            }, 
+            __Callable__::Composite(ps) => {
+                ps.iter().map(|p| self.call(***p));
+            }
+        };
     }
 }
 

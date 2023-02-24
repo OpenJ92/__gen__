@@ -1,12 +1,11 @@
 // use std::ops::Fn;
-use wedged::algebra::*;
-
-use ndarray::Array;
-use ndarray_rand::RandomExt;
-use ndarray_rand::rand_distr::Uniform;
+// use wedged::algebra::*;
+// 
+// use ndarray::Array;
+// use ndarray_rand::RandomExt;
+// use ndarray_rand::rand_distr::Uniform;
 
 use crate::polyline::PolyLine;
-use crate::atomics::{__Point__, Atom, AtomA, CompositeAtom, __Callable__};
 
 pub mod traits;
 use traits::VectorFunction;
@@ -95,13 +94,13 @@ fn main() {
 
 
 pub mod bezier {
-    use crate::traits;
+    // use crate::traits;
     use ndarray::Array;
     use ndarray::IxDyn;
 
-    struct Bezier<B> {
-        pub control_points: Array<IxDyn, B>,
-        pub callparam: fn(Callable<'a, B>) -> Callable<'a, B>,
-    }
+    // struct Bezier<B> {
+    //     pub control_points: Array<IxDyn, B>,
+    //     // pub callparam: fn(Callable<'a, B>) -> Callable<'a, B>,
+    // }
 }
 

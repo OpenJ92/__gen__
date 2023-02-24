@@ -1,8 +1,8 @@
 use crate::traits;
 use crate::segment::Segment;
-use crate::atomics::Atom;
+// use crate::atomics::Atom;
 
-use ndarray::{ Array, Ix1 };
+// use ndarray::{ Array, Ix1 };
 
 use num_traits::FromPrimitive;
 use num_traits::ToPrimitive;
@@ -57,54 +57,54 @@ where
     }
 }
 
-impl<'a, T: ndarray::Dimension> traits::AVectorFunction<T> for PolyLine<'a, T> {
-    // There might be one more construction of the "VFF" Traits. We might want to have
-    // the call function typed like the following:
-    //  
-    //      fn call(&self, t: mut &Atom<T>) -> ()
-    //
-    //  where we simply mutate the memory at the given address. The Array components
-    //  inside the Atom types are heap allocated. Then a composition of functions applied
-    //  to the heap will update the components inplace.
-    fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
-        let res: Result<&Atom<T>, ()> = match t {
-            scalar@Atom::Scalar { .. } => self.call_scalar(scalar),
-            point@Atom::Point { .. } => self.call_point(point),
-            line@Atom::Line { .. } => self.call_line(line),
-            triangle@Atom::Triangle { .. } => self.call_triangle(triangle)
-        };
-        res
-    }
-
-    fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
-        Err(())
-    }
-    fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
-        Err(())
-    }
-    fn call_line(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>{
-        let res: Result<&Atom<T>, ()> = match t {
-            Atom::Line { start: start, end: end } 
-              => { let resstart: Result<&Array<Ix1, T>, ()>
-                            = match self.call_point(&Atom::Point {point: start}) {
-                                      Ok(Atom::Point { point: arr }) => Ok(arr), 
-                                      Ok(_)   => Err(()), 
-                                      Err(..) => Err(())
-                            };
-                   let resend: Result<&Array<Ix1, T>, ()>  
-                          = match self.call_point(&Atom::Point {point: end}) {
-                                      Ok(Atom::Point { point: arr }) => Ok(arr),  
-                                      Ok(_)   => Err(()), 
-                                      Err(..) => Err(())
-                          };
-                   let val = Atom::Line { start: resstart? , end: resend? };
-                   Err(()) 
-                 },
-            _   => Err(()),
-        };
-        res
-    }
-    fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
-            Err(())
-    }
-}
+// impl<'a, T: ndarray::Dimension> traits::AVectorFunction<T> for PolyLine<'a, T> {
+//     // There might be one more construction of the "VFF" Traits. We might want to have
+//     // the call function typed like the following:
+//     //  
+//     //      fn call(&self, t: mut &Atom<T>) -> ()
+//     //
+//     //  where we simply mutate the memory at the given address. The Array components
+//     //  inside the Atom types are heap allocated. Then a composition of functions applied
+//     //  to the heap will update the components inplace.
+//     fn call(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+//         let res: Result<&Atom<T>, ()> = match t {
+//             scalar@Atom::Scalar { .. } => self.call_scalar(scalar),
+//             point@Atom::Point { .. } => self.call_point(point),
+//             line@Atom::Line { .. } => self.call_line(line),
+//             triangle@Atom::Triangle { .. } => self.call_triangle(triangle)
+//         };
+//         res
+//     }
+// 
+//     fn call_scalar(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+//         Err(())
+//     }
+//     fn call_point(&self, t: &Atom<T>) -> Result<&Atom<T>, ()> {
+//         Err(())
+//     }
+//     fn call_line(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>{
+//         let res: Result<&Atom<T>, ()> = match t {
+//             Atom::Line { start: start, end: end } 
+//               => { let resstart: Result<&Array<Ix1, T>, ()>
+//                             = match self.call_point(&Atom::Point {point: start}) {
+//                                       Ok(Atom::Point { point: arr }) => Ok(arr), 
+//                                       Ok(_)   => Err(()), 
+//                                       Err(..) => Err(())
+//                             };
+//                    let resend: Result<&Array<Ix1, T>, ()>  
+//                           = match self.call_point(&Atom::Point {point: end}) {
+//                                       Ok(Atom::Point { point: arr }) => Ok(arr),  
+//                                       Ok(_)   => Err(()), 
+//                                       Err(..) => Err(())
+//                           };
+//                    let val = Atom::Line { start: resstart? , end: resend? };
+//                    Err(()) 
+//                  },
+//             _   => Err(()),
+//         };
+//         res
+//     }
+//     fn call_triangle(&self, t: &Atom<T>)  -> Result<&Atom<T>, ()>  {
+//             Err(())
+//     }
+// }
