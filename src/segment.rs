@@ -1,5 +1,5 @@
 use crate::traits;
-use crate::atomics::{__Point__, __Callable__, AtomA};
+use crate::atomics::{__Point__, __Callable__, Element};
 // use ndarray::Array;
 
 use num_traits::real::Real;
@@ -37,7 +37,9 @@ where
 
 impl<'a, T: ndarray::Dimension> traits::BVectorFunction<'a, T> for Segment<T> {
     fn __call__point__(&self, t: &'a mut __Point__<T>) -> () {
-        // let __Point__{ point: p } = t;
+        let __Point__{ point: p } = t;
+        p.ndim() == 0;
+        
         todo!()
     }
 }
