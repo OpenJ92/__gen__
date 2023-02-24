@@ -55,7 +55,7 @@ impl<'a, T: ndarray::Dimension> traits::BVectorFunction<'a, T> for Segment<T> {
                 self.__call__point__(*p3);
             }, 
             __Callable__::Composite(ps) => {
-                ps.iter().map(|p| self.call(***p));
+                ps.iter().map(|p| self.call(*p));
             }
         };
     }

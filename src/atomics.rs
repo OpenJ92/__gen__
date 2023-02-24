@@ -21,7 +21,7 @@ pub enum AtomA<'a, T: ndarray::Dimension> {
 
 pub enum __Callable__<'a, T: ndarray::Dimension> {
     Atomic(&'a mut AtomA<'a, T>),
-    Composite(Vec<&'a mut Box<&'a mut __Callable__<'a, T>>>)
+    Composite(Vec<&'a mut __Callable__<'a, T>>)
 }
 // Here we're looking to build a set of vector functions which act upon a heap allocated
 // set of Atom(A)s. 
