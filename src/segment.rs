@@ -40,25 +40,6 @@ impl<'a, T: ndarray::Dimension> traits::BVectorFunction<'a, T> for Segment<T> {
         // let __Point__{ point: p } = t;
         todo!()
     }
-    fn call(&self, t: &'a mut __Callable__<T>) -> () {
-        let res = match t {
-            __Callable__::Atomic(AtomA::Point(p))             => {
-                self.__call__point__(*p);
-            },
-            __Callable__::Atomic(AtomA::Line(p1, p2))         => {
-                self.__call__point__(*p1);
-                self.__call__point__(*p2);
-            }, 
-            __Callable__::Atomic(AtomA::Triangle(p1, p2, p3)) => {
-                self.__call__point__(*p1);
-                self.__call__point__(*p2);
-                self.__call__point__(*p3);
-            }, 
-            __Callable__::Composite(ps) => {
-                ps.iter().map(|p| self.call(*p));
-            }
-        };
-    }
 }
 
 // Perhaps this is overkill. Should we have a Atomic Enumeration so we can just 

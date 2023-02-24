@@ -63,7 +63,30 @@ pub trait BSampleMethod<T: ndarray::Dimension> {
 }
 
 pub trait BVectorFunction<'a, T: ndarray::Dimension> {
-    fn call(&self, t: &'a mut __Callable__<T>) -> ();
+    fn call(&self, t: &'a mut __Callable__<T>) -> () {
+        let res = match t {
+            __Callable__::Atomic(AtomA::Point(p))             => {
+                self.__call__point__(*p);
+                // np = self.__call__point__(*p);
+                // __Callable__::Atomic(AtomA::Point(np))
+            },
+            __Callable__::Atomic(AtomA::Line(p1, p2))         => {
+                self.__call__point__(*p1);
+                self.__call__point__(*p2);
+                // np1 = self.__call__point__(*p1);
+                // np2 = self.__call__point__(*p2);
+                // __Callable__::Atomic(AtomA::Line(np1, np2)) 
+            }, 
+            __Callable__::Atomic(AtomA::Triangle(p1, p2, p3)) => {
+                self.__call__point__(*p1);
+                self.__call__point__(*p2);
+                self.__call__point__(*p3);
+            }, 
+            __Callable__::Composite(ps) => {
+                ps.iter_mut().map(|p| self.call(*p)).collect::<()>();
+            }
+        };
+    }
     fn __call__point__(&self, t: &'a mut __Point__<T>) -> ();
     fn sample(&self, sample_method: impl BSampleMethod<T>) -> Result<__Callable__<T>, ()> {
         Err(())
