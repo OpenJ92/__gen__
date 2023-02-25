@@ -1,4 +1,5 @@
-use crate::atomics::{__Point__, Atom, Element, __Callable__};
+use crate::atomics::{Atom, Element, __Callable__};
+use ndarray::{Array, Ix1};
 
 pub trait Atomic<T> : Clone {}
 pub trait Atomic_ : Clone {}
@@ -59,7 +60,8 @@ pub trait Random<T> {
 // }
 
 
-pub trait BVectorFunction<'a, T: ndarray::Dimension> {
+pub trait BVectorFunction<'a,T> {
+    fn __call__point__(&self, t: &'a mut Array<T, Ix1>) -> ();
     fn call(&self, t: &'a mut __Callable__<T>) -> () {
         let res = match t {
             __Callable__::Atomic(Element::Point(p))             => {
@@ -79,7 +81,6 @@ pub trait BVectorFunction<'a, T: ndarray::Dimension> {
             }
         };
     }
-    fn __call__point__(&self, t: &'a mut __Point__<T>) -> ();
     fn sample(&self, sample_method: impl BSampleMethod<T>) -> Vec<&__Callable__<T>> {
         // // error[E02777]
         // sample_method.values().iter_mut().map(|p| self.call(*p)).collect()
@@ -87,6 +88,6 @@ pub trait BVectorFunction<'a, T: ndarray::Dimension> {
     }
 }
 
-pub trait BSampleMethod<T: ndarray::Dimension> {
+pub trait BSampleMethod<T> {
     fn values(&self) -> Vec<&mut __Callable__<T>>; 
 }

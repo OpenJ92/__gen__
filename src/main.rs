@@ -6,9 +6,9 @@
 // use ndarray_rand::rand_distr::Uniform;
 
 use crate::polyline::PolyLine;
+use ndarray::array;
 
 pub mod traits;
-use traits::VectorFunction;
 pub mod export;
 pub mod vectorfunc;
 pub mod polyline;
@@ -43,14 +43,14 @@ fn main() {
     }
 
     let line: segment::Segment<f64> = segment::Segment {
-        start: vec![1.0, 2.0, 3.0, 4.0],
-        end: vec![4.0, 3.0, 2.0, 1.0],
+        start: array![1.0, 2.0, 3.0, 4.0],
+        end: array![4.0, 3.0, 2.0, 1.0],
         callparam: |t| t,
     };
 
     let line_: segment::Segment<f64> = segment::Segment {
-        start: vec![4.0, 3.0, 2.0, 1.0],
-        end: vec![6.0, 2.4, 2.5, 9.0],
+        start: array![4.0, 3.0, 2.0, 1.0],
+        end: array![6.0, 2.4, 2.5, 9.0],
         callparam: |t| t,
     };
 
@@ -65,13 +65,14 @@ fn main() {
     };
 
     let pl: polyline::PolyLine<f64> = PolyLine {
-        segments: &vec![line, line_], 
+        segments: &array![line, line_], 
         callparam: |c| c,
     };
 
-    VectorFunction::call(&pl, vec![1.]);
-    VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
-    VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
+    traits::VectorFunction::call(&pl, vec![1.]);
+    traits::VectorFunction::call(&pl, vec![1.]);
+    traits::VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
+    traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
 }
 
 // pub mod atoms {

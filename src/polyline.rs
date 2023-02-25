@@ -1,6 +1,6 @@
 use crate::traits;
+use crate::traits::BVectorFunction;
 use crate::segment::Segment;
-// use crate::atomics::Atom;
 
 // use ndarray::{ Array, Ix1 };
 
@@ -10,7 +10,7 @@ use num_traits::real::Real;
 use num_traits::zero;
 use num_traits::one;
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(Debug, PartialEq)]
 pub struct PolyLine<'a, B> {
     pub segments: &'a Vec<Segment<B>>,
     pub callparam: fn(B) -> B,
