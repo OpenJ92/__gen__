@@ -61,23 +61,23 @@ pub trait Random<T> {
 
 
 pub trait BVectorFunction<'a,T> {
-    fn __call__point__(&self, t: &'a mut Array<T, Ix1>) -> ();
-    fn call(&self, t: &'a mut __Callable__<T>) -> () {
+    fn call(&self, t: &'a mut Array<T, Ix1>) -> ();
+    fn __call_dispatch__(&self, t: &'a mut __Callable__<T>) -> () {
         let res = match t {
             __Callable__::Atomic(Element::Point(p))             => {
-                self.__call__point__(*p);
+                self.call(*p);
             },
             __Callable__::Atomic(Element::Line(p1, p2))         => {
-                self.__call__point__(*p1);
-                self.__call__point__(*p2);
+                self.call(*p1);
+                self.call(*p2);
             }, 
             __Callable__::Atomic(Element::Triangle(p1, p2, p3)) => {
-                self.__call__point__(*p1);
-                self.__call__point__(*p2);
-                self.__call__point__(*p3);
+                self.call(*p1);
+                self.call(*p2);
+                self.call(*p3);
             }, 
             __Callable__::Composite(ps) => {
-                ps.iter_mut().for_each(|p| self.call(*p));
+                ps.iter_mut().for_each(|p| self.__call_dispatch__(*p));
             }
         };
     }

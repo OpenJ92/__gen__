@@ -65,14 +65,15 @@ fn main() {
     };
 
     let pl: polyline::PolyLine<f64> = PolyLine {
-        segments: &array![line, line_], 
+        segments: &vec![line, line_], 
         callparam: |c| c,
     };
 
-    traits::VectorFunction::call(&pl, vec![1.]);
-    traits::VectorFunction::call(&pl, vec![1.]);
     traits::VectorFunction::call(&v0, vec![1., 2., 3., 4.]);
     traits::VectorFunction::call(&v1, vec![1., 2., 3., 4.]);
+    
+    let shape = (10,);
+    let X1: Array<Ix1, f64> = Array::random(shape, Normal::new(1000., 0.1).unwrap());
 }
 
 // pub mod atoms {

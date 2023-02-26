@@ -36,7 +36,7 @@ pub struct Segment<T> {
 // }
 
 impl<'a, T> BVectorFunction<'a, T> for Segment<T> {
-    fn __call__point__(&self, t: &'a mut Array<T, Ix1>) -> () {
+    fn call(&self, t: &'a mut Array<T, Ix1>) -> () {
         self.start.iter().zip(self.end.iter());
         todo!()
     }
