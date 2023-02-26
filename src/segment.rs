@@ -35,8 +35,13 @@ pub struct Segment<T> {
 //     }
 // }
 
-impl<'a, T> VectorFunction<'a, T> for Segment<T> {
+impl<'a, T> VectorFunction<'a, T> for Segment<T> where T: Real
+{
     fn call(&self, t: &'a mut Array<T, Ix1>) -> () {
-        todo!()
+        // We have to look into how to take the given element t, which
+        // initially exists on the heap, and mutate it into the new form.
+        // How might we do this?
+        *t = Array::zeros((10,));
+        ()
     }
 }

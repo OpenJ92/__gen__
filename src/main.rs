@@ -36,7 +36,21 @@ pub mod atomics;
 // where SampleType = Length(Uniform) | Length(Beta) | Curvature etc...
 //
 // We'd like to have TakePhotograph have a render function
-fn main() { }
+fn main() { 
+    let s = segment::Segment::<f32> {
+        start: array!(1.,1.,1.,1.),
+        end:   array!(1.,1.,2.,2.),
+        callparam: |t| t
+    };
+
+    let mut arr = array!(1.,1.);
+    println!("{:?}", arr);
+
+    let mut binding = atomics::Element::Point(&mut arr);
+    let mut t = atomics::__Callable__::Atomic(&mut binding);
+    traits::VectorFunction::__call_dispatch__(&s, &mut t);
+    println!("{:?}", arr);
+}
 
 
 pub mod bezier {
