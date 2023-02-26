@@ -13,6 +13,7 @@ use ndarray_rand::rand_distr::Normal;
 
 pub mod traits;
 pub mod export;
+pub mod bezier;
 pub mod vectorfunc;
 pub mod polyline;
 pub mod segment;
@@ -53,14 +54,5 @@ fn main() {
 }
 
 
-pub mod bezier {
-    use crate::atomics::__Callable__;
-    use ndarray::Array;
-    use ndarray::IxDyn;
 
-    struct Bezier<'a, B> {
-        pub control_points: Array<IxDyn, B>,
-        pub callparam: fn(__Callable__<'a, B>) -> __Callable__<'a, B>,
-    }
-}
 

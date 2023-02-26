@@ -41,7 +41,7 @@ impl<'a, T> VectorFunction<'a, T> for Segment<T> where T: Real
         // We have to look into how to take the given element t, which
         // initially exists on the heap, and mutate it into the new form.
         // How might we do this?
-        *t = Array::zeros((10,));
+        *t = Array::zeros((3));
         ()
     }
 }
