@@ -1,6 +1,6 @@
-use crate::traits::{VectorFunction, BVectorFunction};
+use crate::traits::{VectorFunction};
 use crate::atomics::{__Callable__, Element};
-use ndarray::{Array, Ix0, Ix1};
+use ndarray::{Array, Ix1};
 
 use num_traits::real::Real;
 
@@ -35,69 +35,8 @@ pub struct Segment<T> {
 //     }
 // }
 
-impl<'a, T> BVectorFunction<'a, T> for Segment<T> {
+impl<'a, T> VectorFunction<'a, T> for Segment<T> {
     fn call(&self, t: &'a mut Array<T, Ix1>) -> () {
-        self.start.iter().zip(self.end.iter());
         todo!()
     }
 }
-
-// Perhaps this is overkill. Should we have a Atomic Enumeration so we can just 
-// pattern match over the possible forms? ie Point, Segment, Triangle, Poly*
-//
-// #[derive(Clone)]
-// pub struct Point<T: Real> {
-//     pub point: Vec<T> 
-// }
-// impl<T: Clone> traits::Atomic_ for Segment<T> {}
-// impl<T: Real> traits::Atomic_ for Point<T> {}
-// impl<T: Real> traits::Vector_Function for Segment<T> { 
-//     fn call<Point<T>>(&self, t) { todo!() }
-// }
-// impl<T: Clone> traits::Atomic<T> for Segment<T> {}
-
-// impl<T> traits::Exportable for Segment<export::SVG, T>
-// where
-//     T: std::fmt::Display,
-// {
-//     fn export_(&self) -> String {
-//         return format!(
-//             "<line x1=\"{}\" \
-//                               x2=\"{}\" \
-//                               y1=\"{}\" \
-//                               y2=\"{}\" \
-//                               fill=\"{}\" \
-//                               stroke=\"{}\" \
-//                               stroke-width=\"{}\"\
-//                         />\n",
-//             self.p[0],
-//             self.p[1],
-//             self.q[0],
-//             self.q[1],
-//             self.export_options.fill,
-//             self.export_options.stroke,
-//             self.export_options.stroke_width
-//         );
-//     }
-// }
-// 
-// impl<T> traits::Exportable for Segment<export::Processing, T>
-// where
-//     T: std::fmt::Display,
-// {
-//     fn export_(&self) -> String {
-//         return format!(
-//             "fill({});\n\
-//                         stroke({});\n\
-//                         strokeWeight({});\n\
-//                         line({}, {}, {}, {});\n",
-//             self.export_options.fill,
-//             self.export_options.stroke,
-//             self.export_options.stroke_width,
-//             self.p[0],
-//             self.p[1],
-//             self.q[0],
-//             self.q[1]
-//         );
-//     }
-// }

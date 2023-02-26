@@ -1,9 +1,8 @@
 use crate::traits;
-use crate::traits::BVectorFunction;
+use crate::traits::VectorFunction;
 use crate::segment::Segment;
 
-// use ndarray::{ Array, Ix1 };
-
+use ndarray::{Array, Ix1};
 use num_traits::FromPrimitive;
 use num_traits::ToPrimitive;
 use num_traits::real::Real;
@@ -12,7 +11,7 @@ use num_traits::one;
 
 #[derive(Debug, PartialEq)]
 pub struct PolyLine<'a, B> {
-    pub segments: &'a Vec<Segment<B>>,
+    pub segments: &'a Array<Segment<B>, Ix1>,
     pub callparam: fn(B) -> B,
 }
 

@@ -1,13 +1,15 @@
 use crate::traits;
+use crate::atomics::{ __Callable__ };
+use ndarray::{ Array, Ix1 };
 
 #[derive(Debug, PartialEq, PartialOrd)]
-pub struct VectorFunc<B> {
-    pub func: fn(Vec<B>) -> Vec<B>,
-    pub callparam: fn(Vec<B>) -> Vec<B>,
+pub struct VectorFunc<'a, T> {
+    pub func: fn(Array<T, Ix1>) -> Array<T, Ix1>,
+    pub callparam: fn(Array<T, Ix1>) -> Array<T, Ix1>,
 }
 
-impl<B> traits::VectorFunction<B> for VectorFunc<B> {
-    fn call(&self, t: Vec<B>) -> Vec<B> {
-        return (self.func)((self.callparam)(t));
+impl<'a, T> traits::VectorFunction<'a, T> for VectorFunc<'a, T> {
+    fn call(&self, t:  &'a mut Array<T, Ix1>) -> () {
+        return (self.func)((self.callparam)(*t));
     }
 }
