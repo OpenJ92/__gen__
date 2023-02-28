@@ -1,6 +1,6 @@
 use crate::traits::{VectorFunction};
 use crate::atomics::{__Callable__, Element};
-use ndarray::{Array, Ix1};
+use ndarray::{Ix1, IxDyn, Array};
 
 use num_traits::real::Real;
 
@@ -37,11 +37,11 @@ pub struct Segment<T> {
 
 impl<'a, T> VectorFunction<'a, T> for Segment<T> where T: Real
 {
-    fn call(&self, t: &'a mut Array<T, Ix1>) -> () {
+    fn call(&self, t: &'a mut Array<T, IxDyn>) -> () {
         // We have to look into how to take the given element t, which
         // initially exists on the heap, and mutate it into the new form.
         // How might we do this?
-        *t = Array::zeros((3));
+        *t = Array::zeros((3, 4, 5)).into_dyn();
         ()
     }
 }

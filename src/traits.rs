@@ -1,5 +1,5 @@
 use crate::atomics::{Element, __Callable__};
-use ndarray::{Array, Ix1};
+use ndarray::{Array, IxDyn};
 
 pub trait Exportable { 
     fn export_(&self) -> String;
@@ -9,7 +9,7 @@ pub trait Random<T> {
 }
 
 pub trait VectorFunction<'a,T> {
-    fn call(&self, t: &'a mut Array<T, Ix1>) -> ();
+    fn call(&self, t: &'a mut Array<T, IxDyn>) -> ();
     fn __call_dispatch__(&self, t: &'a mut __Callable__<T>) -> () {
         let res = match t {
             __Callable__::Atomic(Element::Point(p))             => {

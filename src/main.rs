@@ -44,7 +44,7 @@ fn main() {
         callparam: |t| t
     };
 
-    let mut arr = array!(1.,1.);
+    let mut arr = array!(1.,1.).into_dyn();
     println!("{:?}", arr);
 
     let mut binding = atomics::Element::Point(&mut arr);
