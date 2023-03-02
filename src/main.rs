@@ -7,7 +7,7 @@
 
 use crate::polyline::PolyLine;
 
-use ndarray::{ array, Array, Ix1 };
+use ndarray::{ arr0, array, Array, Ix1 };
 use ndarray_rand::rand_distr::Normal;
 
 
@@ -44,7 +44,7 @@ fn main() {
         callparam: |t| t
     };
 
-    let mut arr = array!(1.,1.).into_dyn();
+    let mut arr = array!(1., 2.).into_dyn();
     println!("{:?}", arr);
 
     let mut binding = atomics::Element::Point(&mut arr);
