@@ -44,13 +44,12 @@ fn main() {
         callparam: |t| t
     };
 
-    let mut arr = array!(1., 2.).into_dyn();
-    println!("{:?}", arr);
-
-    let mut binding = atomics::Element::Point(&mut arr);
-    let mut t = atomics::__Callable__::Atomic(&mut binding);
+    let mut arr = array!(1., 2., 3., 4.,).into_dyn();
+    let mut binding = atomics::Element::Point(arr);
+    let mut t = atomics::__Callable__::Atomic(binding);
+    println!("{:?}", t);
     traits::VectorFunction::__call_dispatch__(&s, &mut t);
-    println!("{:?}", arr);
+    println!("{:?}", t);
 }
 
 

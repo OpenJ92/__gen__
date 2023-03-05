@@ -1,11 +1,14 @@
 use ndarray::{ Array, IxDyn };
 
-pub enum Element<'a, T> {
-    Point(&'a mut Array<T, IxDyn>),
-    Line(&'a mut Array<T, IxDyn>, &'a mut Array<T, IxDyn>),
-    Triangle(&'a mut Array<T, IxDyn>, &'a mut Array<T, IxDyn>, &'a mut Array<T, IxDyn>)
+#[derive(Debug,)]
+pub enum Element<T> {
+    Point(Array<T, IxDyn>),
+    Line(Array<T, IxDyn>, Array<T, IxDyn>),
+    Triangle(Array<T, IxDyn>, Array<T, IxDyn>, Array<T, IxDyn>)
 }
-pub enum __Callable__<'a, T> {
-    Atomic(&'a mut Element<'a, T>),
-    Composite(Vec<&'a mut __Callable__<'a, T>>)
+
+#[derive(Debug,)]
+pub enum __Callable__<T> {
+    Atomic(Element<T>),
+    Composite(Vec<__Callable__<T>>)
 }

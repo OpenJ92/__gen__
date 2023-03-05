@@ -46,8 +46,8 @@ impl<'a, T> VectorFunction<'a, T> for Segment<T> where T: Real
         // This can be a way to check if t is in the right form.
         let l = t.clone().into_dimensionality::<Ix1>();
         match l {
-            Ok(m) =>  *t = (m.clone()+m.clone()).into_dyn(),
-            Err(_) => *t = Array::zeros((3, 4, 5)).into_dyn(),
+            Ok(m) =>  *t = (self.callparam)(m.clone()).into_dyn(),
+            Err(_) => *t = Array::zeros((3, 4, 5, 1)).into_dyn(),
         }
         ()
     }
